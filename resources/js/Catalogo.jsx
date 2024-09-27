@@ -273,10 +273,7 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
             grabCursor={true}
             centeredSlides={false}
             initialSlide={0}
-            pagination={{
-              el: '.swiper-pagination-slider-header',
-              clickable: true,
-            }}
+
             navigation={{
               nextEl: '.next-cat',
               prevEl: '.prev-cat',
@@ -357,6 +354,61 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
 
 
     </form>
+    <section className="mx-[5%] my-16">
+      <div className="flex overflow-hidden flex-col">
+        <div
+          className="pt-16 pl-20 w-full bg-lime-400 rounded-3xl max-md:pl-5 max-md:max-w-full"
+        >
+          <div className="flex gap-5 max-md:flex-col">
+            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+              <div
+                className="flex flex-col justify-center w-full min-w-[320px] max-md:mt-10 max-md:max-w-full"
+              >
+                <div className="flex flex-col w-full text-zinc-950 max-md:max-w-full">
+                  <div className="flex flex-col w-full max-md:max-w-full">
+                    <div className="text-2xl font-medium max-md:max-w-full">
+                      Pro. Más allá.
+                    </div>
+                    <div
+                      className="mt-3 text-8xl font-bold max-md:max-w-full max-md:text-4xl"
+                    >
+                      <span className="">IPhone 14</span>
+                      Pro
+                    </div>
+                  </div>
+                  <div className="mt-3 text-lg font-medium max-md:max-w-full">
+                    Creado para cambiar todo para mejor. Para todo el mundo.
+                  </div>
+                </div>
+                <div
+                  className="gap-2.5 self-start px-4 py-3 mt-8 text-base font-bold text-lime-400 rounded-xl bg-zinc-950"
+                >
+                  Comprar ahora
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+              <div
+                className="flex flex-col grow items-center px-20 mt-8 w-full bg-lime-500 rounded-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
+              >
+                <img
+                  loading="lazy"
+                  srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                  className="object-contain z-10 mt-0 max-w-full aspect-[1.16] w-[406px]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <section className="mx-[5%] my-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-9 md:pr-4">
+        {items.map((item, i) => <ProductCard key={`product-${item.id}`} item={item} bgcolor={'bg-white'} is_reseller={is_proveedor.current} />)}
+      </div>
+    </section>
+
   </>)
 }
 

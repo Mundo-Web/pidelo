@@ -95,224 +95,311 @@
     }
 
   @endphp
-  @component('components.breadcrumbs', ['breadcrumbs' => $breadcrumbs])
-  @endcomponent
-  <main class="font-Inter_Regular" id="mainSection">
+
+  <main class="font-mulish_Regular" id="mainSection">
     @csrf
     <section class="w-full px-[5%] md:px-[8%]">
       <div class="grid grid-cols-1 2md:grid-cols-2 gap-10 md:gap-16 pt-8 lg:pt-16">
-        {{-- grid grid-col-1 sm:grid-cols-3  gap-6  mt-5 h-max w-6/12 --}}
-        {{-- flex flex-col justify-center items-center gap-5 h-max w-6/12 --}}
-        <div class="flex flex-col justify-start items-center gap-5">
-          {{-- <div class="col-span-3 h-max md:h-[400px] 2xl:h-[580px]  " id="containerProductosdetail">
-                    <img class="w-full h-max md:h-[400px] 2xl:h-[580px] object-cover" src="{{ asset($product->imagen) }}"
-                        alt="">
-                </div> --}}
+
+        <div class="flex flex-col md:flex-row justify-start md:gap-12 md:h-max-[540px] relative">
+          <!-- Contenedor de la imagen principal -->
           <div id="containerProductosdetail"
-            class="w-full flex justify-center items-center h-[330px] 2xs:h-[400px] sm:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden">
+            class=" w-[340px] md:w-[413px] flex justify-center h-[330px] 2xs:h-[400px] sm:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden 
+            order-1 md:order-2">
             <img src="{{ asset($product->imagen) }}" alt="computer" class="w-full h-full object-contain" data-aos="fade-up"
               data-aos-offset="150" onerror="this.onerror=null;this.src='/images/img/noimagen.jpg';">
           </div>
-          <x-product-slider :product="$product" />
-        </div>
-        <div class="flex flex-col gap-6  mt-4">
-          <div class="flex flex-col gap-3">
-            <h3 class="font-Inter_Medium text-4xl text-[#333] font-normal tracking-tight"> {{ $product->producto }}</h3>
-            <p class="font-Inter_Regular text-base gap-2">Disponibilidad:
-              @if ($product->stock == 0)
-                <span class="text-[#f6000c]">No hay Stock disponible</span>
-              @else
-                <span class="text-[#006BF6]">Quedan {{ round((float) $product->stock) }} en stock</span>
-              @endif
-            </p>
-            <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
-              <div class="bg-blue-600 h-1.5 rounded-full" style="width: {{ $stock }}%"></div>
-            </div>
+
+          <!-- Contenedor del slider de productos -->
+          <div class="md:w-[75px] md:h-[540px] md:order-1 order-2 mt-5 md:mt-0">
+            <x-product-slider :product="$product" />
           </div>
-
-          <div class="flex flex-col gap-3 ">
-            @if ($product->sku)
-              <p class="font-Inter_Regular text-[15.34px] gap-2 text-[#666666] mt-2">SKU: {{ $product->sku }}</p>
-            @endif
-
-
-            @if ($is_reseller)
-              <div class="flex flex-col gap-3 content-start items-start mt-4">
-
-                <div class="content-center flex flex-row gap-2 items-center ">
-                  <span class="font-Inter_Regular text-sm gap-2 text-[#666666] line-through">S/
-                    {{ $product->descuento }}</span>
-                  <span class="text-[#666666] font-Inter_Regular line-through text-sm">S/
-                    {{ $product->precio }}</span>
+        </div>
+        <div class="flex flex-col gap-6  mt-4 mb-24">
+          <div class="flex flex-col max-w-[505px]">
+            <div class="flex flex-col pb-6 w-full max-md:max-w-full">
+              <div class="flex flex-col w-full max-md:max-w-full">
+                <div class="flex flex-col justify-center w-full text-zinc-950 max-md:max-w-full">
+                  <div class="text-xs font-mulish_Medium">{{ $product->category->name }}</div>
+                  <div class="mt-1 text-[40px] font-mulish_Bold max-md:max-w-full">
+                    {{ $product->producto }}
+                  </div>
                 </div>
-                <div class="content-center flex flex-row gap-2 items-center ">
-                  Reseller:
-                  <span class="font-Inter_SemiBold text-3xl gap-2 text-[#006BF6]">S/
-                    {{ $product->precio_reseller }}</span>
+                <div class="flex gap-2.5 items-center self-start mt-4 text-xs font-mulish_Medium text-zinc-950">
+                  <img loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/210cf34f306a0c8793dc6e1384cc19c26139c217f7d854b2cdf0f526c1a16f17?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                    class="object-contain shrink-0 self-stretch my-auto aspect-[5.49] w-[88px]" />
+                  <div class="self-stretch my-auto">11 Reseñas</div>
                 </div>
               </div>
-            @else
-              <div class="flex flex-row gap-3 content-center items-center mt-4">
-                @if ($product->descuento == 0)
-                  <div class="content-center flex flex-row gap-2 items-center">
-                    <span class="font-Inter_SemiBold text-3xl gap-2 text-[#006BF6]">Precio Regular S/
-                      {{ $product->precio }}</span>
+              <div class="mt-6 font-mulish_Regular  text-zinc-500 max-md:max-w-full">
+                {{ $product->description }}
+              </div>
+              <div class="flex flex-wrap gap-3 items-center mt-6 w-full max-md:max-w-full">
+                @if ($product->oferta > 0)
+                  <div class="self-stretch my-auto text-3xl font-mulish_Bold text-neutral-900">
+                    S/ {{ $product->oferta }}
+                  </div>
+                  <div class="self-stretch my-auto text-xl font-mulish_Medium  text-zinc-500">
+                    S/ {{ $product->precio }}
                   </div>
                 @else
-                  <div class="content-start flex flex-col gap-2 ">
-                    <div>
-                      <span class="font-Inter_SemiBold text-2xl gap-2 text-[#006BF6]">Precio Promo: S/
-                        {{ $product->descuento }}</span>
-
-                    </div>
-                    <div>
-                      <span>Precio Regular</span>
-                      <span class="text-[#15294C] opacity-80 font-Inter_Regular line-through text-sm"> S/
-                        {{ $product->precio }}</span>
-                    </div>
-
+                  <div class="self-stretch my-auto text-3xl font-mulish_Bold text-neutral-900">
+                    S/ {{ $product->precio }}
                   </div>
-                  @php
-                    $descuento = round((($product->precio - $product->descuento) * 100) / $product->precio);
-                  @endphp
-                  <span
-                    class="ml-2 font-Inter_Medium text-center content-center text-xs gap-2 bg-[#006BF6] text-white h-9 w-16 rounded-3xl px-2">
-                    -{{ $descuento }}% </span>
                 @endif
               </div>
-
-            @endif
-
-
-
-            <div class="font-medium text-base font-Inter_Regular w-full mt-4 text-[#444] text-justify">
-              {!! $product->description !!}
-            </div>
-          </div>
-
-          @if (!$product->attributes->isEmpty())
-            <div class="flex flex-col gap-8 mt-4 font-Inter_Regular text-lg">
-              @php
-                $groupedAttributes = $product->attributes->groupBy('titulo');
-              @endphp
-
-              @foreach ($groupedAttributes as $titulo => $items)
-                <div class="flex flex-row gap-3 text-center text-base font-Inter_Medium">
-                  <span>{{ $titulo }}:</span>
-                  @foreach ($items as $item)
-                    @php
-                      // Encuentra el objeto en $valorAtributo que tiene el id igual a $item->pivot->attribute_value_id
-                      $atributo = $valorAtributo->firstWhere('id', $item->pivot->attribute_value_id);
-                    @endphp
-                    @if ($atributo)
-                      <!-- Muestra el valor del atributo encontrado -->
-                      <span class="bg-[#006BF6] text-white rounded-md px-5 text-base">{{ $atributo->valor }}</span>
-                    @endif
-                  @endforeach
+              <div class="flex flex-wrap gap-6 justify-center items-center mt-6 w-full max-md:max-w-full">
+                <div
+                  class="flex flex-1 shrink gap-3 items-center self-stretch my-auto whitespace-nowrap basis-0 min-w-[240px]">
+                  <div class="self-stretch my-auto text-sm text-zinc-500">Cantidad</div>
+                  <div
+                    class="flex gap-1 items-center self-stretch px-2 py-1.5 my-auto font-mulish_Regular font-mulish_Medium text-black rounded border border-black border-solid">
+                    <div class="self-stretch my-auto">01</div>
+                    <img loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/c17fd8f44f7ae5254a817f4dca91799083eb8099d2491bb655c4b0b7cffdd1df?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                      class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
+                  </div>
                 </div>
-              @endforeach
-            </div>
-          @endif
-
-          @if (!$especificaciones->isEmpty())
-            <p class="font-Inter_Medium text-base gap-2 ">Especificaciones: </p>
-            <div class="min-w-full divide-y divide-gray-200">
-              <table class=" divide-y divide-gray-200 ">
-                <tbody>
-                  @foreach ($especificaciones as $item)
-                    <tr>
-                      <td class="px-4 py-1 border border-gray-200">
-                        {{ $item->tittle }}
-                      </td>
-                      <td class="px-4 py-1 border border-gray-200">
-                        {{ $item->specifications }}
-                      </td>
-                    </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-          @endif
-
-          <div class="flex flex-col xl:flex-row gap-6 font-Inter_Regular text-base">
-            <div class="flex flex-row gap-2 items-center">
-              <i class="h-5 w-5 inline-block"
-                style="background-image: url('{{ asset('images/img/carrito.png') }}'); background-size: contain; background-position: center; background-repeat: no-repeat;"></i>
-              <span class=""> Envio a Domicilio</span>
-            </div>
-            <div class="flex flex-row gap-2 items-center">
-              <img src="{{ asset('images/img/WhatsApp.png') }}" alt="whatsapp" class="w-8" />
-              <a href="https://api.whatsapp.com/send?phone={{ $general->whatsapp }}&text=Hola! Quería solicitar informacion para el producto  {{ $product->producto }}. 
-                "
-                target="_blank" class="">Preguntar sobre este producto</a>
-            </div>
-          </div>
-
-          <div class="flex flex-col gap-4">
-            <div class="flex flex-col xl:flex-row gap-5">
-              <div class="flex mb-4">
-                <div class="flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
-                  <button class="py-2.5 px-5 text-lg font-Inter_SemiBold" id=disminuir type="button">-</button>
-                </div>
-                <div id=cantidadSpan
-                  class="py-2.5 px-5 flex justify-center items-center bg-[#F5F5F5] text-lg font-Inter_SemiBold">
-                  <span>1</span>
-                </div>
-                <div class="flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
-                  <button class="py-2.5 px-5 text-lg font-Inter_SemiBold" id=aumentar type="button">+</button>
+                <div class="flex flex-1 shrink gap-6 self-stretch my-auto basis-0">
+                  <div class="my-auto font-mulish_Regular font-mulish_Bold text-neutral-950">Color:</div>
+                  <div class="flex flex-1 shrink gap-2 items-center h-full basis-0">
+                    <div class="flex shrink-0 self-stretch my-auto w-7 h-7 bg-red-100 rounded-full"></div>
+                    <div class="flex shrink-0 self-stretch my-auto w-7 h-7 rounded-full bg-zinc-600"></div>
+                    <div class="flex shrink-0 self-stretch my-auto w-7 h-7 bg-orange-100 rounded-full"></div>
+                    <div class="flex shrink-0 self-stretch my-auto w-7 h-7 bg-orange-50 rounded-full"></div>
+                    <div class="flex shrink-0 self-stretch my-auto w-7 h-7 bg-gray-200 rounded-full"></div>
+                  </div>
                 </div>
               </div>
-              <div class="xl:ml-8 flex flex-row gap-5 justify-start items-center">
-                @if ($product->status == 1 && $product->visible == 1)
-                  <button id="btnAgregarCarritoPr" data-id="{{ $product->id }}"
-                    class="bg-[#0D2E5E] w-[286px] h-16  text-white text-center rounded-full font-Inter_SemiBold tracking-wide text-lg hover:bg-[#1E8E9E]">
-                    Agregar
-                    al Carrito
-                  </button>
-                @endif
-
-                @if (Auth::user() !== null)
-                  <button
-                    class=" @if ($isWhishList) bg-[#0D2E5E]  @else bg-[#99b9eb] @endif w-12 h-12 rounded-full text-white flex justify-center items-center hover:bg-[#1E8E9E]"
-                    type="button" id="addWishlist">
-                    <img src="{{ asset('images/img/blanco.png') }}" alt="" class="w-8 h-8">
-                  </button>
-                @endif
-
-
+              <div class="flex flex-col mt-6 w-full text-sm text-zinc-950 max-md:max-w-full">
+                <div class="max-md:max-w-full">
+                  Disponibilidad:
+                  <span class="text-zinc-950"> {{ $product->stock > 0 ? 'En stock' : 'No Disponible' }}</span>
+                </div>
+                <div class="mt-2 max-md:max-w-full">
+                  Marca:
+                  <span class="text-zinc-950">Apple</span>
+                </div>
+                <div class="mt-2 max-md:max-w-full">
+                  Peso con empaque:
+                  <span class="text-zinc-950">0.310 kg</span>
+                </div>
+                <div class="mt-2 text-zinc-500 max-md:max-w-full">
+                  Producto sin devolución
+                </div>
+                <div class="mt-2 max-md:max-w-full">
+                  Producto de:
+                  <span class="text-zinc-950">Vendedor verificado</span>
+                </div>
+                <div class="mt-2 max-md:max-w-full">
+                  SKU:
+                  <span class="text-zinc-950">Vendedor 182631_8d860u3e</span>
+                </div>
+              </div>
+              <div
+                class="flex flex-wrap gap-4 items-start mt-6 w-full text-sm font-mulish_Bold text-zinc-950 max-md:max-w-full">
+                <div class="flex flex-1 shrink gap-2 items-center p-4 rounded-lg basis-0 bg-neutral-100 min-w-[168px]">
+                  <img loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/097b84dfeeaf9365d1a9194c0988752da3a1325f5b3e7e6eb28ce6e4fa92466f?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                    class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square" />
+                  <div class="flex-1 shrink my-auto basis-0">
+                    <span class="text-zinc-500">Tamaño de pantalla</span>
+                    <br />
+                    6.7&quot;
+                  </div>
+                </div>
+                <div
+                  class="flex flex-1 shrink gap-2 items-center px-4 py-3.5 rounded-lg basis-0 bg-neutral-100 min-h-[64px] min-w-[168px]">
+                  <img loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/3054bc8ee2097b9f27f41a66ef637d0e798897aaa979bd8dc6eba3919a92e287?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                    class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square" />
+                  <div class="flex-1 shrink my-auto basis-0">
+                    <span class="text-zinc-500">CPU</span>
+                    Apple A16 Bionic
+                  </div>
+                </div>
+                <div
+                  class="flex flex-1 shrink gap-2 items-center px-4 py-3.5 rounded-lg basis-0 bg-neutral-100 min-h-[64px] min-w-[168px]">
+                  <img loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/0ae847612036b118de1f22da475013af26dbee3970974cd6abd0c16b5d818f1e?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                    class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square" />
+                  <div class="flex-1 shrink my-auto basis-0">
+                    <span class="text-zinc-500">Number of Cores</span>
+                    6
+                  </div>
+                </div>
+                <div
+                  class="flex flex-1 shrink gap-2 items-center px-4 py-3.5 rounded-lg basis-0 bg-neutral-100 min-h-[64px] min-w-[168px]">
+                  <img loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/2056b6e99d3776270412b4884cc2c7f0e2503122ad3f955485daeef7c5a43373?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                    class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square" />
+                  <div class="flex-1 shrink my-auto basis-0">
+                    <span class="text-zinc-500">Main camera</span>
+                    <br />
+                    48-12 -12 MP
+                  </div>
+                </div>
+                <div
+                  class="flex flex-1 shrink gap-2 items-center px-4 py-3.5 rounded-lg basis-0 bg-neutral-100 min-h-[64px] min-w-[168px]">
+                  <img loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/0c0dcb86fa07830b61245469cbe4f3459d7f4e734ca1840028f54acd73773375?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                    class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square" />
+                  <div class="flex-1 shrink my-auto basis-0">
+                    <span class="text-zinc-500">Front-camera</span>
+                    12 MP
+                  </div>
+                </div>
+                <div
+                  class="flex flex-1 shrink gap-2 items-center px-4 py-3.5 rounded-lg basis-0 bg-neutral-100 min-h-[64px] min-w-[168px]">
+                  <img loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/a714f3c016828075a0d9b3e0c33176fcbabe8e4abe4e196aff8b598024d9c6ad?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                    class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square" />
+                  <div class="flex-1 shrink my-auto basis-0">
+                    <span class="text-zinc-500">Battery capacity</span>
+                    4323 mAh
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-
-
-          <div class="flex flex-col gap-2 pb-8 lg:pb-16" data-aos="fade-up">
-            <span class="text-base font-Inter_Medium">
-              Pago seguro garantizado
-            </span>
-            <div class="flex flex-wrap gap-2 px-1 mt-2">
-              <img src="{{ asset('images\svg\american.svg') }}" alt="" class="h-9 w-14">
-              <img src="{{ asset('images\svg\visa.svg') }}" alt="" class="h-9 w-14">
-              <img src="{{ asset('images/svg/mastercad.svg') }}" alt="mastercad" class="h-9 w-14" />
-            </div>
-            <div class="flex flex-row gap-4 mt-6">
-              <span class="text-base font-Inter_Medium">Compartir</span>
-              <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank">
-                <img src="{{ asset('images/svg/gb.svg') }}" alt="Facebook" class="h-8 w-8"></a>
-              <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}" target="_blank">
-                <img src="{{ asset('images/svg/twitter.svg') }}" alt="Twitter" class="h-8 w-8"></a>
-              <a href="https://pinterest.com/pin/create/button/?url={{ urlencode(url()->current()) }}&media={{ urlencode(asset($product->imagen)) }}&description=YourDescription"
-                target="_blank">
-                <img src="{{ asset('images/svg/pinterest.svg') }}" alt="Pinterest" class="h-8 w-8"></a>
-
-
+            <div class="flex flex-col p-8 mt-5 w-full rounded-3xl bg-neutral-100 max-md:px-5 max-md:max-w-full">
+              <div class="flex flex-col w-full max-md:max-w-full">
+                <div class="flex gap-10 justify-between items-center w-full text-xs max-md:max-w-full">
+                  @if ($product->oferta > 0)
+                    <div class="flex flex-col self-stretch my-auto">
+                      <div class="text-zinc-950 text-opacity-40">
+                        <span class="text-zinc-950">Precio: </span>
+                        <span class="line-through text-zinc-950">S/ {{ $product->precio }}</span>
+                      </div>
+                      <div class="mt-1 font-mulish_Bold text-zinc-950">Ahorras: S/ {{ $product->oferta }}
+                        ({{ round((($product->precio - $product->oferta) / $product->precio) * 100) }}%)</div>
+                    </div>
+                  @endif
+                  <div
+                    class="gap-2.5 self-stretch px-3 py-2 my-auto font-mulish_Bold text-lime-400 rounded-xl bg-zinc-950">
+                    Envío gratis
+                  </div>
+                </div>
+                <div class="mt-8 text-4xl font-mulish_Bold text-zinc-950 max-md:max-w-full">
+                  S/ {{ $product->precio }}
+                </div>
+                <div class="flex flex-col mt-8 w-full text-sm font-mulish_Medium max-md:max-w-full">
+                  <div class="flex gap-3 items-center w-full max-md:max-w-full">
+                    <img loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/63e6ecf3a665e18274aa4c462e15e0cf347abc8ff44f7a7658ab0ecaac95c0ac?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                      class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    <div class="flex gap-2 items-center self-stretch my-auto min-w-[240px]">
+                      <div class="self-stretch my-auto text-zinc-950">
+                        Este producto tiene
+                      </div>
+                      <div
+                        class="gap-2.5 self-stretch px-1.5 py-1 my-auto rounded-lg bg-[#9AFA26] bg-opacity-40 text-zinc-950">
+                        Garantía de Entrega
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-center mt-3 w-full text-zinc-950 max-md:max-w-full">
+                    <img loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/45047bcb091bba8f8f3d7d3086b27ae7b6cd41047da72bfd0c623cd2d3db7143?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                      class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    <div class="self-stretch my-auto">
+                      Agrega el producto al carrito para conocer los costos de envío
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-center mt-3 w-full text-zinc-950 max-md:max-w-full">
+                    <img loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/87e003dad5b46bc764bb48b7e89aca24c449f6b28069c4aa2f91153b573779e4?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                      class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    <div class="flex-1 shrink self-stretch my-auto basis-0">
+                      Recibí aproximadamente entre 18 y 23 días hábiles, seleccionando
+                      envío normal
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex gap-2 items-center px-4 py-3 mt-8 w-full font-mulish_Regular font-mulish_Medium bg-lime-200 rounded-lg text-zinc-950 max-md:max-w-full">
+                  <img loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/dbeefc5c4a406246c1344618009d19886db5217f6552c53e2abbefbc70d2b155?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                    class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
+                  <div class="self-stretch my-auto">Hasta x6 cuotas sin intereses</div>
+                </div>
+                <div class="flex gap-10 items-start mt-8 w-full max-md:max-w-full">
+                  <div class="flex flex-col">
+                    <div class="flex gap-1 items-start">
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/d429e4d62079e21c93377c41b73e849dd1ff20c0d7b6359b7e2cd455f74b486a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/d429e4d62079e21c93377c41b73e849dd1ff20c0d7b6359b7e2cd455f74b486a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/d429e4d62079e21c93377c41b73e849dd1ff20c0d7b6359b7e2cd455f74b486a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/d429e4d62079e21c93377c41b73e849dd1ff20c0d7b6359b7e2cd455f74b486a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/d429e4d62079e21c93377c41b73e849dd1ff20c0d7b6359b7e2cd455f74b486a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/d429e4d62079e21c93377c41b73e849dd1ff20c0d7b6359b7e2cd455f74b486a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/d429e4d62079e21c93377c41b73e849dd1ff20c0d7b6359b7e2cd455f74b486a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/d429e4d62079e21c93377c41b73e849dd1ff20c0d7b6359b7e2cd455f74b486a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 w-10 aspect-[1.54]" />
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/362a8fb23120c6d780b5c6f6a2385d27eb6945afa2aed7dd5a994d7ef8d96d32?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/362a8fb23120c6d780b5c6f6a2385d27eb6945afa2aed7dd5a994d7ef8d96d32?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/362a8fb23120c6d780b5c6f6a2385d27eb6945afa2aed7dd5a994d7ef8d96d32?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/362a8fb23120c6d780b5c6f6a2385d27eb6945afa2aed7dd5a994d7ef8d96d32?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/362a8fb23120c6d780b5c6f6a2385d27eb6945afa2aed7dd5a994d7ef8d96d32?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/362a8fb23120c6d780b5c6f6a2385d27eb6945afa2aed7dd5a994d7ef8d96d32?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/362a8fb23120c6d780b5c6f6a2385d27eb6945afa2aed7dd5a994d7ef8d96d32?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/362a8fb23120c6d780b5c6f6a2385d27eb6945afa2aed7dd5a994d7ef8d96d32?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 aspect-[1.5] w-[39px]" />
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/0b72cf8afa312611fb61fd5ca8e58668577707e7c844ec0128b2a1cb9eb5a6ed?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/0b72cf8afa312611fb61fd5ca8e58668577707e7c844ec0128b2a1cb9eb5a6ed?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0b72cf8afa312611fb61fd5ca8e58668577707e7c844ec0128b2a1cb9eb5a6ed?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/0b72cf8afa312611fb61fd5ca8e58668577707e7c844ec0128b2a1cb9eb5a6ed?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/0b72cf8afa312611fb61fd5ca8e58668577707e7c844ec0128b2a1cb9eb5a6ed?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/0b72cf8afa312611fb61fd5ca8e58668577707e7c844ec0128b2a1cb9eb5a6ed?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/0b72cf8afa312611fb61fd5ca8e58668577707e7c844ec0128b2a1cb9eb5a6ed?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/0b72cf8afa312611fb61fd5ca8e58668577707e7c844ec0128b2a1cb9eb5a6ed?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 w-10 aspect-[1.54]" />
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/06afbcbad0b203e0dc301470e2a843ad8782caa5f58c0e61f676556c1f754208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/06afbcbad0b203e0dc301470e2a843ad8782caa5f58c0e61f676556c1f754208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/06afbcbad0b203e0dc301470e2a843ad8782caa5f58c0e61f676556c1f754208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/06afbcbad0b203e0dc301470e2a843ad8782caa5f58c0e61f676556c1f754208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/06afbcbad0b203e0dc301470e2a843ad8782caa5f58c0e61f676556c1f754208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/06afbcbad0b203e0dc301470e2a843ad8782caa5f58c0e61f676556c1f754208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/06afbcbad0b203e0dc301470e2a843ad8782caa5f58c0e61f676556c1f754208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/06afbcbad0b203e0dc301470e2a843ad8782caa5f58c0e61f676556c1f754208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 w-10 aspect-[1.54]" />
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/85895488a3402b5094e3fe5d28fdff47bc38946a876ccdd57237bf2fd01b9c43?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/85895488a3402b5094e3fe5d28fdff47bc38946a876ccdd57237bf2fd01b9c43?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/85895488a3402b5094e3fe5d28fdff47bc38946a876ccdd57237bf2fd01b9c43?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/85895488a3402b5094e3fe5d28fdff47bc38946a876ccdd57237bf2fd01b9c43?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/85895488a3402b5094e3fe5d28fdff47bc38946a876ccdd57237bf2fd01b9c43?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/85895488a3402b5094e3fe5d28fdff47bc38946a876ccdd57237bf2fd01b9c43?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/85895488a3402b5094e3fe5d28fdff47bc38946a876ccdd57237bf2fd01b9c43?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/85895488a3402b5094e3fe5d28fdff47bc38946a876ccdd57237bf2fd01b9c43?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 w-10 aspect-[1.54]" />
+                    </div>
+                    <div class="flex gap-1 items-start mt-1">
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/13efdadfba40cbe79d355dac9bbde85d6b6c5194e7a0403d209ee4c4aa67bf2c?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/13efdadfba40cbe79d355dac9bbde85d6b6c5194e7a0403d209ee4c4aa67bf2c?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/13efdadfba40cbe79d355dac9bbde85d6b6c5194e7a0403d209ee4c4aa67bf2c?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/13efdadfba40cbe79d355dac9bbde85d6b6c5194e7a0403d209ee4c4aa67bf2c?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/13efdadfba40cbe79d355dac9bbde85d6b6c5194e7a0403d209ee4c4aa67bf2c?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/13efdadfba40cbe79d355dac9bbde85d6b6c5194e7a0403d209ee4c4aa67bf2c?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/13efdadfba40cbe79d355dac9bbde85d6b6c5194e7a0403d209ee4c4aa67bf2c?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/13efdadfba40cbe79d355dac9bbde85d6b6c5194e7a0403d209ee4c4aa67bf2c?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 w-10 aspect-[1.54]" />
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/d18a06a7bb65a8c7ae8c0cb6e8c0096cc6240a316059291d985c7d301eaa5dd9?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/d18a06a7bb65a8c7ae8c0cb6e8c0096cc6240a316059291d985c7d301eaa5dd9?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/d18a06a7bb65a8c7ae8c0cb6e8c0096cc6240a316059291d985c7d301eaa5dd9?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/d18a06a7bb65a8c7ae8c0cb6e8c0096cc6240a316059291d985c7d301eaa5dd9?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/d18a06a7bb65a8c7ae8c0cb6e8c0096cc6240a316059291d985c7d301eaa5dd9?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/d18a06a7bb65a8c7ae8c0cb6e8c0096cc6240a316059291d985c7d301eaa5dd9?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/d18a06a7bb65a8c7ae8c0cb6e8c0096cc6240a316059291d985c7d301eaa5dd9?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/d18a06a7bb65a8c7ae8c0cb6e8c0096cc6240a316059291d985c7d301eaa5dd9?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 w-10 aspect-[1.54]" />
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/7a7b6eed8e68db41a2b77744b1e641355c558790f0bd39e6ec66c17716aee005?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/7a7b6eed8e68db41a2b77744b1e641355c558790f0bd39e6ec66c17716aee005?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/7a7b6eed8e68db41a2b77744b1e641355c558790f0bd39e6ec66c17716aee005?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/7a7b6eed8e68db41a2b77744b1e641355c558790f0bd39e6ec66c17716aee005?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/7a7b6eed8e68db41a2b77744b1e641355c558790f0bd39e6ec66c17716aee005?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/7a7b6eed8e68db41a2b77744b1e641355c558790f0bd39e6ec66c17716aee005?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/7a7b6eed8e68db41a2b77744b1e641355c558790f0bd39e6ec66c17716aee005?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/7a7b6eed8e68db41a2b77744b1e641355c558790f0bd39e6ec66c17716aee005?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 w-10 aspect-[1.54]" />
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/d4e554848be334efa55393b82e6f23433644ffbbc7e3797dd420b9b18088e515?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/d4e554848be334efa55393b82e6f23433644ffbbc7e3797dd420b9b18088e515?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/d4e554848be334efa55393b82e6f23433644ffbbc7e3797dd420b9b18088e515?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/d4e554848be334efa55393b82e6f23433644ffbbc7e3797dd420b9b18088e515?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/d4e554848be334efa55393b82e6f23433644ffbbc7e3797dd420b9b18088e515?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/d4e554848be334efa55393b82e6f23433644ffbbc7e3797dd420b9b18088e515?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/d4e554848be334efa55393b82e6f23433644ffbbc7e3797dd420b9b18088e515?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/d4e554848be334efa55393b82e6f23433644ffbbc7e3797dd420b9b18088e515?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 aspect-[1.5] w-[39px]" />
+                      <img loading="lazy"
+                        srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/2a3bd114b3e63234c2b54fb4170d47b199b59b5a9fad82bf57847355660da108?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/2a3bd114b3e63234c2b54fb4170d47b199b59b5a9fad82bf57847355660da108?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/2a3bd114b3e63234c2b54fb4170d47b199b59b5a9fad82bf57847355660da108?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/2a3bd114b3e63234c2b54fb4170d47b199b59b5a9fad82bf57847355660da108?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/2a3bd114b3e63234c2b54fb4170d47b199b59b5a9fad82bf57847355660da108?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/2a3bd114b3e63234c2b54fb4170d47b199b59b5a9fad82bf57847355660da108?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/2a3bd114b3e63234c2b54fb4170d47b199b59b5a9fad82bf57847355660da108?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/2a3bd114b3e63234c2b54fb4170d47b199b59b5a9fad82bf57847355660da108?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                        class="object-contain shrink-0 w-10 aspect-[1.54]" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col mt-10 w-full  font-mulish_Bold text-zinc-950 max-md:max-w-full">
+                <div
+                  class="gap-2.5 self-stretch px-6 py-4 w-full whitespace-nowrap bg-[#9AFA26] rounded-xl max-md:px-5 max-md:max-w-full text-center cursor-pointer">
+                  Comprar
+                </div>
+                <div
+                  class="gap-2.5 self-stretch px-6 py-4 mt-3 w-full rounded-xl border border-solid border-zinc-950 max-md:px-5 max-md:max-w-full text-center cursor-pointer">
+                  Agregar al Carrito
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    @if ($ProdComplementarios->count() > 0)
+      <section class="w-full px-[5%] py-10 lg:py-10 overflow-visible" style="overflow-x: visible">
+        <div class="flex flex-col md:flex-row justify-between w-full gap-3" data-aos="zoom-out-left">
+          <h1 class="text-[32px] md:text-3xl font-mulish_Bold font- text-[#111111]">Productos Relacinados
+          </h1>
+          <div
+            class="flex gap-2.5 justify-center items-center self-stretch px-4 py-3 my-auto text-base bg-[#9AFA26] rounded-xl min-w-[240px] text-zinc-950">
+            <a href="/catalogo" class="self-stretch my-auto font-mulish_Bold cursor-pointer">Ver Más</a>
+            <img loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/0448c1bbdfa12dffa95e5de9d23f4da994ed54d115e5e1bf10b41154192595e4?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+              class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-4       md:flex-row gap-9 mt-14 w-full">
+          @foreach ($ProdComplementarios as $item)
+            <x-product.container width="col-span-1 " bgcolor="bg-neutral-100" :item="$item" />
+          @endforeach
+        </div>
+      </section>
+    @endif
 
-    @if ($combo->id)
+    {{--  @if ($combo->id)
       <section class="bg-[#F8F8F8] py-10 lg:py-14">
         <div class="w-full px-[5%] md:px-[8%]">
           <div class="flex flex-col justify-between w-full ">
@@ -328,7 +415,7 @@
                     </span>
                   </div>
                   <button id="btnAgregarCombo" type="button"
-                    class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-3 py-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                    class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-mulish_Medium rounded-full text-sm px-3 py-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                     data-id={{ $combo->id }}>
                     <i class="fa fa-cart-plus"></i>
                     Agregar al carrito
@@ -342,11 +429,7 @@
                           <div class="swiper-slide w-full h-full col-span-1">
                             <div class="flex flex-col items-center justify-center col-span-1  shadow-lg py-2  pb-5">
                               <a href="/producto/{{ $item->id }}" target="_blanck">
-                                {{-- <img src="{{ asset('images\img\1.png') }}" alt="" class="h-40 w-40 ">
-                                                                    <span> {{ $item->producto }}</span>
-                                                                    <h2 class="font-Inter_Bold text-[#006BF6]">S/ 80.00</h2> --}}
-                                {{--  <x-product.container-combinalo width="" height="h-[300px]" bgcolor="bg-[#FFFFFF]"
-                                        textpx="text-[17px]" :item="$item" /> --}}
+                                
                                 <x-product.container width="col-span-1 " bgcolor="" :item="$item" />
                               </a>
                             </div>
@@ -363,9 +446,9 @@
           </div>
         </div>
       </section>
-    @endif
+    @endif --}}
 
-    <section class="bg-[#F8F8F8] py-10 lg:py-14">
+    {{--  <section class="bg-[#F8F8F8] py-10 lg:py-14">
       <div class="w-full px-[5%] md:px-[8%]">
         <div class="flex flex-col md:flex-row justify-between w-full ">
           <h1 class="text-3xl font-Inter_SemiBold tracking-tight">Productos Relacionados</h1>
@@ -375,21 +458,21 @@
                 $url = "/catalogo/{$ProdComplementarios[0]->categoria_id}";
             }
           @endphp
-          <a href="{{ $url }}" class="flex items-center text-base font-Inter_SemiBold text-[#006BF6] ">Ver
+          <a href="{{ $url }}"
+            class="flex items-center font-mulish_Regular font-Inter_SemiBold text-[#006BF6] ">Ver
             todos los productos <img src="{{ asset('images/img/arrowBlue.png') }}" alt="Icono" class="ml-5 "></a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-14 w-full">
           @foreach ($ProdComplementarios->take(4) as $item)
-            {{-- <x-product.container-combinalo width="" height="h-[400px]" bgcolor="bg-[#FFFFFF]"
-              textpx="text-[20px]" :item="$item" /> --}}
+            
             <x-product.container width="col-span-1 " bgcolor="bg-[#FFFFFF]" :item="$item" />
           @endforeach
         </div>
       </div>
 
-    </section>
+    </section> --}}
 
-    @if ($testimonios->count() > 0)
+    {{--  @if ($testimonios->count() > 0)
       <section class="">
         <div class="w-full px-[5%] md:px-[8%]">
           <h3 class="text-[34.7px] font-Inter_Medium "> ¿Qué dicen los clientes sobre nosotros?</h3>
@@ -418,7 +501,7 @@
           </div>
         </div>
       </section>
-    @endif
+    @endif --}}
 
   </main>
 

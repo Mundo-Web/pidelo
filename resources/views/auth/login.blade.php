@@ -64,7 +64,7 @@
 
             <div class="px-4">
               <input type="submit" value="Iniciar Sesión"
-                class="text-white bg-[#006BF6] w-full py-4 rounded-3xl cursor-pointer font-light font-Inter_Medium tracking-wide" />
+                class="text-white bg-[#9AFA26] w-full py-4 rounded-3xl cursor-pointer font-light font-Inter_Medium tracking-wide" />
             </div>
 
             <div class="flex flex-row justify-center items-centerpx-4">

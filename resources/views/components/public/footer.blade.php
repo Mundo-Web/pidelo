@@ -27,15 +27,17 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:justify-center w-full px-[5%] py-8 lg:py-16 ">
 
-    <div class="flex flex-col text-[#444444] text-base gap-1">
-      <h3 class="font-bold text-xl text-text-white pb-3">Contacta con Nosotros</h3>
-      <p>{{ config('app.name') }}</p>
+    <div class="flex flex-col text-[#FFFFFF] text-base gap-1">
+      <img id="logo-pidelope" class="w-[170px]  " {{-- public\images\svg\LOGO2.png --}} src="{{ asset('images/pidelope/pidelope.png') }}"
+        alt="pidelope" />
+      {{-- <h3 class="font-bold text-xl text-text-white pb-3">Contacta con Nosotros</h3> --}}
+      {{--  <p>{{ config('app.name') }}</p>
       <p>{{ $datosgenerales->address }}</p>
       <p> {{ $datosgenerales->city }} - {{ $datosgenerales->country }}</p>
       <p>{{ $datosgenerales->cellphone }}</p>
       <p>{{ $datosgenerales->email }}</p>
-
-      <div class="flex flex-row gap-4 text-text-white mt-6 pt-2">
+ --}}
+      {{-- <div class="flex flex-row gap-4 text-text-white mt-6 pt-2">
         @if ($datosgenerales->facebook)
           <a href="{{ $datosgenerales->facebook }}" target="_blank">
             <i class="fa-brands fa-facebook fa-2xl"></i>
@@ -66,60 +68,106 @@
             <i class="fa-brands fa-youtube fa-2xl"></i>
           </a>
         @endif
-      </div>
+      </div> --}}
     </div>
 
-    <div class="flex flex-col text-[#444444] text-base gap-1">
-      <h3 class="font-bold text-xl text-text-white pb-3">Información</h3>
+    <div class="flex flex-col text-[#FFFFFF] text-base gap-1">
+      <h3 class="font-bold text-xl text-text-white pb-3">Menú</h3>
       <a href="/">Inicio</a>
-      <a href="{{ route('Catalogo.jsx') }}">Productos</a>
-      <a href="{{ route('blog', 0) }}">Blog</a>
+      <a href="/">Destino</a>
+      <a href="/">Ayuda</a>
+      <a href="/">Contacto</a>
+      {{-- <a href="{{ route('Catalogo.jsx') }}">Destino</a> --}}
+      {{-- <a href="{{ route('blog', 0) }}">Blog</a> --}}
     </div>
 
-    <div class="flex flex-col text-[#444444] text-base gap-1">
-      <h3 class="font-bold text-xl text-text-white pb-3">Servicio al Cliente</h3>
-      <a href="/contacto">Contacto</a>
+    <div class="flex flex-col text-[#FFFFFF] text-base gap-1">
+      <h3 class="font-bold text-xl text-text-white pb-3">Políticas </h3>
+      <a href="#">Políticas de privacidad</a>
       <a id="linkTerminos">Terminos y condiciones </a>
-      <a id="linkPoliticas">Politicas de devolucion </a>
-      <a id="linkPoliticasDatos">Politica de Datos</a>
+      {{-- <a id="linkPoliticas">Politicas de devolucion </a>
+      <a id="linkPoliticasDatos">Politica de Datos</a> --}}
 
-      <a href="{{ route('librodereclamaciones') }}"><img class="w-24"
-          src="{{ asset('images/img/reclamaciones.png') }}" /></a>
+      {{--  <a href="{{ route('librodereclamaciones') }}"><img class="w-24"
+          src="{{ asset('images/img/reclamaciones.png') }}" /></a> --}}
     </div>
 
-    <div class=" flex flex-col gap-2 text-[#444444] text-base">
-      <h3 class="font-bold text-xl text-text-white pb-3">Únete al Blog</h3>
-      <p>¡Suscríbete ahora para no perderte ninguno de nuestros artículos!</p>
+    <div class=" flex flex-col gap-2 text-[#FFFFFF] text-base">
+      <h3 class="font-bold text-xl text-text-white pb-3">Métodos de pago</h3>
+
+      <div class="grid grid-cols-5 gap-4">
+        <img src="/images/pidelope/tarjeta1.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta2.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta3.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta4.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta5.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta6.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta7.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta8.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta9.png" alt="" class="w-14 col-span-1">
+        <img src="/images/pidelope/tarjeta10.png" alt="" class="w-14 col-span-1">
+      </div>
+      {{-- <p>¡Suscríbete ahora para no perderte ninguno de nuestros artículos!</p>
       <div class="relative bg-[#F8F8F8] rounded-full p-2 px-4">
         <form id="subsEmail" class="flex">
           @csrf
           <input type="email" name="email" id="emailFooter" placeholder="Déjanos tu e-mail"
             class="w-full border-none focus:border-transparent ring-0 focus:ring-0 p-2 bg-[#F8F8F8]" />
           <input type="text" name="tipo" value="Inscripción" hidden />
-          <button type="submit" class=" text-[#444444] p-2 font-semibold">Enviar</button>
+          <button type="submit" class=" text-[#FFFFFF] p-2 font-semibold">Enviar</button>
         </form>
-      </div>
+      </div> --}}
     </div>
 
   </div>
 
-  <div class="bg-[#F8F8F8] py-4 flex items-center justify-center">
+  <div class="bg-[#9AFA26] py-2 flex items-center justify-center">
     <div class="flex flex-col lg:flex-row justify-between items-center gap-5 w-full px-[5%]">
       <div class="text-center">
-        <p class="font-normal text-sm text-[#444444]">
-          Copyright &copy; 2023 {{ config('app.name') }}. Reservados todos los derechos. Powered by <a
+        <p class="font-mulish_Bold text-sm text-[#0A090B]">
+          Copyright &copy; 2023 {{ config('app.name') }}. Copyright © 2023 PideloPe. Reservados todos los derechos <a
             href="https://www.mundoweb.pe" target="_blank" class="text-[#006BF6] border-b border-[#006BF6]"> Mundo Web
           </a>
         </p>
       </div>
-      <div class="flex gap-2 items-center justify-center">
-        <img src="{{ asset('images/svg/visa.svg') }}" alt="visa" class="h-7 md:h-10" />
-        <img src="{{ asset('images/svg/american.svg') }}" alt="american" class="h-7 md:h-10" />
-        <img src="{{ asset('images/svg/mastercad.svg') }}" alt="mastercad" class="h-7 md:h-10" />
-        <img src="{{ asset('images/svg/stripe.svg') }}" alt="stripe" class="h-7 md:h-10" />
-        <img src="{{ asset('images/svg/paypal.svg') }}" alt="paypal" class="h-7 md:h-10" />
-        <img src="{{ asset('images/svg/pay.svg') }}" alt="pay" class="h-7 md:h-10" />
+      <div class="flex flex-row gap-6 text-[#0A090B]  items-center">
+        @if ($datosgenerales->facebook)
+          <a href="{{ $datosgenerales->facebook }}" target="_blank">
+            <img src="/images/pidelope/icons8-facebook-nuevo.svg" alt="" class="w-8">
+          </a>
+        @endif
+        @if ($datosgenerales->instagram)
+          <a href="{{ $datosgenerales->instagram }}" target="_blank">
+            <img src="/images/pidelope/icons8-instagram.svg" alt="" class="w-8">
+
+          </a>
+        @endif
+        @if ($datosgenerales->linkedin)
+          <a href="{{ $datosgenerales->linkedin }}" target="_blank">
+
+            <img src="/images/pidelope/icons8-linkedin.svg" alt="" class="w-8">
+          </a>
+        @endif
+        @if ($datosgenerales->tiktok)
+          <a href="{{ $datosgenerales->tiktok }}" target="_blank">
+
+            <img src="/images/pidelope/icons8-tik-tok.svg" alt="" class="w-8">
+          </a>
+        @endif
+        @if ($datosgenerales->twitter)
+          <a href="{{ $datosgenerales->twitter }}" target="_blank">
+
+            <img src="/images/pidelope/icons8-twitterx.svg" alt="" class="w-8">
+          </a>
+        @endif
+        @if ($datosgenerales->youtube)
+          <a href="{{ $datosgenerales->youtube }}" target="_blank">
+            <img src="/images/pidelope/icons8-youtube.svg" alt="" class="w-8">
+
+          </a>
+        @endif
       </div>
+
     </div>
   </div>
 

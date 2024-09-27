@@ -662,7 +662,7 @@ class IndexController extends Controller
       ->where('categoria_id', '=', $product->categoria_id)
       ->where('status', '=', true)
       ->where('visible', '=', true)
-      ->get();
+      ->get()->take(8);
     $atributos = Attributes::where("status", "=", true)->get();
     $valorAtributo = AttributesValues::where("status", "=", true)->get();
     $url_env = env('APP_URL');
