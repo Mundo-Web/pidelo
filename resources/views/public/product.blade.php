@@ -367,10 +367,10 @@
                   class="gap-2.5 self-stretch px-6 py-4 w-full whitespace-nowrap bg-[#9AFA26] rounded-xl max-md:px-5 max-md:max-w-full text-center cursor-pointer">
                   Comprar
                 </div>
-                <div
+                <button id="btnAgregarCarritoPr" data-id="{{ $product->id }}"
                   class="gap-2.5 self-stretch px-6 py-4 mt-3 w-full rounded-xl border border-solid border-zinc-950 max-md:px-5 max-md:max-w-full text-center cursor-pointer">
                   Agregar al Carrito
-                </div>
+                </button>
               </div>
             </div>
           </div>

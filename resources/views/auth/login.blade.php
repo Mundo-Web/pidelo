@@ -14,7 +14,7 @@
 
     <!-- Segundo div -->
     <div class="w-full md:basis-1/2  text-[#151515] flex justify-center items-center font-Inter_Medium">
-      <div class="w-5/6 flex flex-col gap-5">
+      <div class="w-5/6 flex flex-col gap-5 bg-[#FCFCFC] px-2 md:px-10 rounded-xl py-12">
         <div class="flex flex-col gap-5 text-center md:text-left">
           @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
@@ -47,15 +47,15 @@
 
             <div class="flex gap-3 px-4 justify-between">
               <div>
-                <input type="checkbox" id="acepto_terminos" class="w-4" />
+                {{-- <input type="checkbox" id="acepto_terminos" class="w-4" />
                 <label for="acepto_terminos" class="font-normal text-base font-Inter_Medium">Recuérdame
-                </label>
+                </label> --}}
               </div>
 
               @if (Route::has('password.request'))
                 <div>
                   <a href="{{ route('password.request') }}"
-                    class="font-normal text-base font-Inter_Medium text-[#006BF6]">¿Olvidaste
+                    class="font-normal text-base font-mulish_Bold text-[#0A090B]">¿Olvidaste
                     tu contraseña?</a>
                 </div>
               @endif
@@ -64,12 +64,12 @@
 
             <div class="px-4">
               <input type="submit" value="Iniciar Sesión"
-                class="text-white bg-[#9AFA26] w-full py-4 rounded-3xl cursor-pointer font-light font-Inter_Medium tracking-wide" />
+                class="text-[#0A090B] bg-[#9AFA26] w-full py-4 rounded-xl cursor-pointer  font-mulish_Bold tracking-wide" />
             </div>
 
-            <div class="flex flex-row justify-center items-centerpx-4">
+            <div class="flex flex-row justify-center items-center px-4 ">
               <a href="{{ route('register') }}"
-                class="text-[#006BF6] w-full py-2 rounded-3xl cursor-pointer font-light font-Inter_Medium tracking-normal text-center">Crear
+                class="text-[#0A090B] w-full py-4 rounded-xl cursor-pointer  font-mulish_Bold tracking-normal text-center border border-[#0A090B]">Crear
                 una Cuenta</a>
             </div>
 

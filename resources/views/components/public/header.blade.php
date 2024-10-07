@@ -100,6 +100,50 @@
       <div class=" mulish_Regular  text-end hidden lg:flex">
         @if (Auth::user() == null)
           <a href="/login" class="px-4">Iniciar sesión </a> | <a href="/register" class="px-4">Regístrate </a>
+        @else
+          <div class="relative  hidden md:inline-flex" x-data="{ open: false }">
+            <button class="px-3 py-1 inline-flex justify-center items-center group" aria-haspopup="true"
+              @click.prevent="open = !open" :aria-expanded="open">
+              <div class="flex items-center truncate">
+                <span id="username"
+                  class="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:opacity-75 dark:group-hover:text-slate-200 text-[#272727] ">
+                  {{ explode(' ', Auth::user()->name)[0] }}</span>
+                <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
+                  <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                </svg>
+              </div>
+            </button>
+            <div
+              class="right-0 z-10 absolute top-full min-w-44 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5
+                shadow-lg overflow-hidden mt-1 rounded-lg"
+              @click.outside="open = false" @keydown.escape.window="open = false" x-show="open">
+              <ul class="">
+                <li class="hover:bg-[#F3F3F3]">
+                  <a class="font-mulish_Regular text-sm text-black flex items-center py-1 px-4 "
+                    href="{{ route('micuenta') }}" @click="open = false" @focus="open = true"
+                    @focusout="open = false">Mi Cuenta</a>
+                </li>
+                <li class="hover:bg-[#F3F3F3]">
+                  <a class="font-mulish_Regular text-sm text-black flex items-center py-1 px-4 " href="#"
+                    @click="open = false" @focus="open = true" @focusout="open = false">Mis Favoritos</a>
+                </li>
+                <li class="hover:bg-[#F3F3F3]">
+                  <a class="font-mulish_Regular text-sm text-black flex items-center py-1 px-4 " href="#"
+                    @click="open = false" @focus="open = true" @focusout="open = false">Mis Pedidos</a>
+                </li>
+
+                <li class="hover:bg-[#F3F3F3]">
+                  <form method="POST" action="{{ route('logout') }}" x-data>
+                    @csrf
+                    <button type="submit" class="font-mulish_Regular text-sm text-black flex items-center py-1 px-4 "
+                      @click.prevent="$root.submit(); open = false">
+                      {{ __('Cerrar sesión') }}
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
         @endif
 
       </div>
@@ -133,11 +177,12 @@
               </select>
 
             </div>
-            <input type="text" placeholder="Buscar productos"
+            <input type="text" placeholder="Buscar productos" id="BuscadorProductos"
               class="flex-grow border-t border-b  border-gray-300 px-4 py-2 focus:outline-none h-full">
             <div
               class="flex-grow border-t border-b  border-r  border-gray-300  focus:outline-none h-full text-green-500 font-bold py-2 px-4 rounded-r-2xl   flex justify-center items-center ">
-              <button class="bg-[#0A090B] rounded-xl  text-[#9AFA26] text-[14px] mulish_Light px-2 py-2">
+              <button class="bg-[#0A090B] rounded-xl  text-[#9AFA26] text-[14px] mulish_Light px-2 py-2 " type="button"
+                onclick="buscarProductos()">
                 <i class="fa-solid fa-magnifying-glass mr-2"></i>
                 Buscar
               </button>
@@ -151,7 +196,7 @@
 
       <div class="min-w-[163px] flex flex-row justify-between items-center font-bold">
         <a href="#">Nosotros</a>
-        <a href="#">Contacto</a>
+        <a href="/contacto">Contacto</a>
 
       </div>
 
@@ -171,9 +216,10 @@
 
 
       <div class="w-min-[79px] ">
-        <button class="flex flex-row gap-2 items-center"><img src="/images/pidelope/shopping-cart.png" alt="">
+        <div id="open-cart" class=" relative flex flex-row gap-2 items-center cursor-pointer">
+          <img src="/images/pidelope/shopping-cart.png" alt="">
           Carrito
-        </button>
+        </div>
       </div>
     </div>
 
@@ -668,6 +714,7 @@
     })
   }
   $(document).on('click', '#btnAgregarCarritoPr', function() {
+    console.log('agregando al carrito');
     let url = window.location.href;
     let partesURL = url.split('/');
     let productoEncontrado = partesURL.find(parte => parte === 'producto');
@@ -704,4 +751,12 @@
 
 
   })
+</script>
+
+<script>
+  function buscarProductos() {
+    value = $('#BuscadorProductos').val()
+    console.log()
+    window.location.href = `/catalogo?amzs=${encodeURI(value) }`
+  }
 </script>

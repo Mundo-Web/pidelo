@@ -38,18 +38,118 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
     };
   }, []);
 
+  const realizarBusqueda = async (amz) => { // items relacionados 
+
+    console.log(amz)
+
+    if (cancelTokenSource.current) {
+      cancelTokenSource.current.cancel('Operation canceled due to new request.');
+    }
+
+    // Crear un nuevo token de cancelación
+    cancelTokenSource.current = axios.CancelToken.source();
+
+    let url = `127.0.0.1:8080/api/amazon/search?query=${amz}`
+    try {
+      const response = await axios.get(url)
+      const { data, status } = response
+      if (status === 200) {
+        const datos = data.map(item => {
+          return {
+            id: item.uuid,
+            producto: item.name, imagen: item.img, extract: item.Description ?? '',
+            precio: item.price,
+            category: { name: item.CategoryNames[0] ?? '' }
+          }
+        })
+
+        console.log(datos)
+
+        is_proveedor.current = true;
+        setItems(datos)
+      }
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+
+
+    /*  imagen
+     producto
+     extract
+     precio */
+
+
+  }
+  const itemsamazon = async (word) => {
+
+    console.log(word)
+
+    if (cancelTokenSource.current) {
+      cancelTokenSource.current.cancel('Operation canceled due to new request.');
+    }
+
+    // Crear un nuevo token de cancelación
+    cancelTokenSource.current = axios.CancelToken.source();
+
+    const options = {
+      cancelToken: cancelTokenSource.current.token,
+      method: 'GET',
+      url: 'http://127.0.0.1:8080/api/amazon/search',
+      params: {
+        query: word,
+        page: '1',
+        country: 'US',
+        sort_by: 'RELEVANCE',
+        product_condition: 'ALL',
+        is_prime: 'false',
+        deals_and_discounts: 'NONE'
+      },
+      headers: {
+        'x-rapidapi-key': 'fe172f3a7emshd5f1ac69eea5682p1d9dc7jsn5bce9792d4cc',
+        'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+      const data = response.data
+      const datos = data.map(item => {
+        return {
+          id: item.uuid,
+          producto: item.name, imagen: item.img, extract: item.Description ?? '',
+          precio: item.price,
+          // category: { name: item.CategoryNames[0] ?? '' }
+        }
+      })
+      is_proveedor.current = true;
+      setItems(datos)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
     // Leer el parámetro 'tag' de la URL
     const params = new URLSearchParams(window.location.search);
     const tag = params.get('tag');
+    const amz = params.get('amzs');
 
     // Actualizar el filtro con el 'tag_id' si existe
+    if (amz) {
+      // realizarBusqueda(amz)
+      itemsamazon(amz)
+      return
+    }
     if (tag) {
       setFilter(prevFilter => ({
         ...prevFilter,
         'txp.tag_id': [tag]
       }));
     }
+
+
 
     // Si hay una categoría seleccionada, agregarla al filtro
     if (selected_category) {
@@ -61,15 +161,47 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
   }, [selected_category]);
 
   useEffect(() => {
+
+    const params = new URLSearchParams(window.location.search);
+    const tag = params.get('tag');
+    const amz = params.get('amzs');
+
+    // Actualizar el filtro con el 'tag_id' si existe
+    if (amz) {
+      // realizarBusqueda(amz)
+      itemsamazon(amz)
+      return
+    }
+
     setCurrentPage(1);
     getItems();
   }, [filter]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tag = params.get('tag');
+    const amz = params.get('amzs');
+
+    // Actualizar el filtro con el 'tag_id' si existe
+    if (amz) {
+      // realizarBusqueda(amz)
+      itemsamazon(amz)
+      return
+    }
     getItems();
   }, [currentPage]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tag = params.get('tag');
+    const amz = params.get('amzs');
+
+    // Actualizar el filtro con el 'tag_id' si existe
+    if (amz) {
+      // realizarBusqueda(amz)
+      itemsamazon(amz)
+      return
+    }
     if (subCatId !== null) {
       setFilter({ ...filter, subcategory_id: [subCatId] });
     }
@@ -232,7 +364,7 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
   };
   const chunkedCategorias = chunkArray(categoriasAll, 2);
 
-  console.log(chunkedCategorias)
+
 
   return (<>
     <style>
@@ -331,7 +463,7 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:pr-4">
-          {items.map((item, i) => <ProductCard key={`product-${item.id}`} item={item} bgcolor={'bg-white'} is_reseller={is_proveedor.current} />)}
+          {items.map((item, i) => <ProductCard key={`product-${item.id}`} item={item} bgcolor={'bg-white'} is_external={is_proveedor.current} />)}
         </div>
         <div className="w-full font-mulish_Medium flex flex-row justify-center items-center">
           <FilterPagination current={currentPage} setCurrent={setCurrentPage} pages={Math.ceil(totalCount / take)} />
@@ -405,7 +537,7 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
     </section>
     <section className="mx-[5%] my-16">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-9 md:pr-4">
-        {items.map((item, i) => <ProductCard key={`product-${item.id}`} item={item} bgcolor={'bg-white'} is_reseller={is_proveedor.current} />)}
+        {items.map((item, i) => <ProductCard key={`product-${item.id}`} item={item} bgcolor={'bg-white'} is_external={is_proveedor.current} />)}
       </div>
     </section>
 

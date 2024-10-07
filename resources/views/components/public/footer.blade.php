@@ -28,7 +28,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:justify-center w-full px-[5%] py-8 lg:py-16 ">
 
     <div class="flex flex-col text-[#FFFFFF] text-base gap-1">
-      <img id="logo-pidelope" class="w-[170px]  " {{-- public\images\svg\LOGO2.png --}} src="{{ asset('images/pidelope/pidelope.png') }}"
+      <img id="logo-pidelope" class="w-[170px]  " {{-- public\images\svg\LOGO2.png --}} src="{{ asset('images/pidelope/logFooter.png') }}"
         alt="pidelope" />
       {{-- <h3 class="font-bold text-xl text-text-white pb-3">Contacta con Nosotros</h3> --}}
       {{--  <p>{{ config('app.name') }}</p>

@@ -126,8 +126,8 @@
         <x-menu.item id="estados" href="{{ route('estados.index') }}" icon="fas fa-toggle-on">
           Estados de pedidos
         </x-menu.item>
-        {{-- <x-menu.item id="faqs" href="{{ route('faqs.index') }}"
-          icon="fas fa-question-circle">FAQs</x-menu.item> --}}
+        <x-menu.item id="faqs" href="{{ route('faqs.index') }}"
+          icon="fas fa-question-circle">FAQs</x-menu.item>
         <x-menu.item id="slider" href="{{ route('slider.index') }}" icon="fas fa-sliders-h">Sliders</x-menu.item>
         <x-menu.item id="popup" href="{{ route('popup.index') }}" icon="fas fa-sliders-h">Popup</x-menu.item>
         <x-menu.item id="banners" href="{{ route('banners.index') }}"

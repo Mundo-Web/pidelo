@@ -9,123 +9,169 @@
 
 @section('content')
 
-  @php
-    $breadcrumbs = [['title' => 'Inicio', 'url' => route('index')], ['title' => 'Contacto', 'url' => '/contacto']];
-  @endphp
-  @component('components.breadcrumbs', ['breadcrumbs' => $breadcrumbs])
-  @endcomponent
 
 
   <main>
 
-    <section class="font-Inter_Regular my-12">
-      <div class="flex flex-col gap-4   w-11/12 m-auto px-8 sm:px-16 pt-10 ">
-        <h3 class="text-[39px] font-Inter_Medium text-[#333333]">¡Siempre estamos ansiosos por saber de usted! </h3>
-        <span class="text-[20px]">Puede llamarnos en horario laboral o visitar nuestra oficina. Todos los correos
-          electrónicos recibirán
-          respuesta en un plazo de 24 horas. ¡Nos encantaría saber de usted!</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-11/12 m-auto px-8 sm:px-16 pt-10 gap-8">
-        <div class="w-full relative">
-          <img class="absolute" src="{{ asset('images\location_on.png') }}" alt="">
+    <section class="mx-[5%] my-16">
+      <div class="flex flex-wrap gap-10 justify-center items-start">
+        <div class="flex flex-col flex-1 shrink basis-0 h-[988px] min-w-[240px] max-md:max-w-full">
+          <form class="flex flex-col justify-center w-full max-md:max-w-full" id="formContactos">
+            <div class="flex flex-col justify-center w-full max-md:max-w-full">
+              <div class="text-5xl font-mulish_Bold text-zinc-950 max-md:max-w-full max-md:text-4xl">
+                Hablemos Hoy
+              </div>
+              <div class="mt-2 text-base text-zinc-500 max-md:max-w-full">
+                <p>
+                  ¡Estamos aquí para ayudarte!
+                </p>
+                <p>
+                  Si tienes alguna pregunta, duda o simplemente quieres saber más sobre lo que ofrecemos, no dudes en
+                  ponerte en contacto con nosotros. ¡Tu consulta es
+                  importante para nosotros!
+                </p>
 
-          <div class="pl-14 gap-3 flex flex-col">
-            <p class="text-[25px] font-Inter_SemiBold">Direccion</p>
-            <p class="text-[20px]">{{ $general->address }}</p>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center mt-10 w-full text-sm text-zinc-500 max-md:max-w-full">
+              <input
+                class="gap-2.5 self-stretch px-5 py-4 w-full rounded-xl bg-neutral-100 max-md:max-w-full outline-none border-none"
+                name="name" placeholder="Nombre completo">
 
+              </input>
+              <input type="email" id="email"
+                class="gap-2.5 self-stretch px-5 py-4 mt-4 w-full rounded-xl bg-neutral-100 max-md:max-w-full outline-none border-none"
+                name="email" placeholder="Correo electrónico">
 
-          </div>
-          <p class="text-[20px] pl-14"> {{ $general->city }} - {{ $general->country }}</p>
-
+              </input>
+              <textarea name="message" placeholder="Mensaje"
+                class="flex-1 shrink gap-2.5 self-stretch px-5 py-4 mt-4 w-full whitespace-nowrap rounded-xl bg-neutral-100 max-md:max-w-full outline-none border-none">
+              </textarea>
+            </div>
+            <div class="flex flex-col mt-10 w-full text-sm font-mulish_Bold text-center text-zinc-950 max-md:max-w-full">
+              <button class="px-16 py-4 w-full bg-lime-400 rounded-xl max-md:px-5 max-md:max-w-full" id="btnEnviar">
+                Enviar Mensaje
+              </button>
+            </div>
+          </form>
+          <img loading="lazy"
+            srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/172b380826f7e9fbce24f99b048e3288f957841c4f24b8b4cb59a1ac828b0dec?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/172b380826f7e9fbce24f99b048e3288f957841c4f24b8b4cb59a1ac828b0dec?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/172b380826f7e9fbce24f99b048e3288f957841c4f24b8b4cb59a1ac828b0dec?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/172b380826f7e9fbce24f99b048e3288f957841c4f24b8b4cb59a1ac828b0dec?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/172b380826f7e9fbce24f99b048e3288f957841c4f24b8b4cb59a1ac828b0dec?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/172b380826f7e9fbce24f99b048e3288f957841c4f24b8b4cb59a1ac828b0dec?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/172b380826f7e9fbce24f99b048e3288f957841c4f24b8b4cb59a1ac828b0dec?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/172b380826f7e9fbce24f99b048e3288f957841c4f24b8b4cb59a1ac828b0dec?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+            class="object-contain flex-1 mt-10 w-full rounded-none aspect-[2.05] max-md:max-w-full" />
         </div>
-        <div class="w-full relative">
-          <img class="absolute" src="{{ asset('images\call.png') }}" alt="">
-          <div class="pl-14 gap-3 flex flex-col">
-            <p class="text-[25px] font-Inter_SemiBold">Contacto</p>
-            <p class="text-[20px]">
-              @isset($general->whatsapp)
-                WhatsApp: {{ $general->whatsapp }}
-              @endisset
-            </p>
-            <p class="text-[20px]">
-              @isset($general->office_phone)
-                Oficina: {{ $general->office_phone }}
-              @endisset
-            </p>
-            <p class="text-[20px]">
-              @isset($general->cellphone)
-                Celular: {{ $general->cellphone }}
-              @endisset
-            </p>
+        <div class="flex flex-col min-w-[240px] w-[414px]">
+          <div class="flex flex-col px-6 pt-6 pb-14 w-full rounded-xl bg-neutral-100 min-h-[308px] max-md:px-5">
+            <img loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/6f3a1bd5e9a23768beade21eac0023529f3f65b37716fb9474a4040ad6a87208?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+              class="object-contain w-12 aspect-square" />
+            <div class="flex flex-col mt-6 w-full">
+              <div class="flex flex-col w-full">
+                <div class="text-3xl font-mulish_Bold leading-tight text-zinc-950">
+                  Email
+                </div>
+                <div class="mt-4 text-base text-zinc-500">
+                  Escríbenos para recibir atención personalizada y resolver tus dudas.
+                </div>
+              </div>
+              <div
+                class="gap-2.5 self-start px-3 py-2 mt-6 text-xs font-mulish_Bold text-lime-400 whitespace-nowrap rounded-xl bg-zinc-950">
+                {{ $general->email }}
+              </div>
+            </div>
           </div>
-          <p class="text-[20px] pl-14">Correo: {{ $general->email }}</p>
-
-        </div>
-
-        <div class="w-full relative">
-          <img class="absolute" src="{{ asset('images\avg_pace.png') }}" alt="">
-          <div class="pl-14 gap-3 flex flex-col">
-            <p class="text-[25px] font-Inter_SemiBold">Horario de Funcionamiento</p>
-            <p class="text-[20px]">{{ $general->schedule }}</p>
-            {{-- <p class="text-[20px]">Lunes – Viernes: 09:00 – 20:00</p> --}}
+          <div class="flex flex-col px-6 pt-6 pb-14 mt-8 w-full rounded-xl bg-neutral-100 min-h-[308px] max-md:px-5">
+            <img loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/04c6778499411318914add0c438e73dc19d2924bbe14e8d6da576a9a2539399a?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+              class="object-contain w-12 aspect-square" />
+            <div class="flex flex-col mt-6 w-full">
+              <div class="flex flex-col w-full">
+                <div class="text-3xl font-mulish_Bold leading-tight text-zinc-950">
+                  Teléfono
+                </div>
+                <div class="mt-4 text-base text-zinc-500">
+                  Llámanos para obtener soporte inmediato y asistencia profesional.
+                </div>
+              </div>
+              <div
+                class="gap-2.5 self-start px-3 py-2 mt-6 text-xs font-mulish_Bold text-lime-400 rounded-xl bg-zinc-950">
+                {{ $general->cellphone }}
+              </div>
+            </div>
           </div>
+          <div class="flex flex-col p-6 mt-8 w-full rounded-xl bg-neutral-100 max-md:px-5">
+            <img loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/6931878251df8fba8ec622d7f67f55077f97cd6d21acd30bfe44b7439aac35c6?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+              class="object-contain w-12 aspect-square" />
+            <div class="flex flex-col mt-6 w-full">
+              <div class="flex flex-col w-full">
+                <div class="text-3xl font-mulish_Bold leading-tight text-zinc-950">
+                  Oficina
+                </div>
+                <div class="mt-4 text-base text-zinc-500">
+                  Visítanos en nuestra oficina para conocer nuestras soluciones de
+                  tratamiento de agua en persona.
+                </div>
+              </div>
+              <div
+                class="flex-1 shrink gap-2.5 self-stretch px-3 py-2 mt-6 w-full text-xs font-mulish_Bold text-lime-400 rounded-xl bg-zinc-950">
+                {{ $general->address }} , {{ $general->inside }} , {{ $general->district }} - {{ $general->city }} -
+                {{ $general->country }}
 
+              </div>
+            </div>
+          </div>
         </div>
-
-
       </div>
-
-      <div class="grid grid-cols-1 w-11/12 m-auto px-16 mt-10">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3900.937710661743!2d-77.0299873!3d-12.1164145!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x29d29e03062cc93%3A0xb0fb1dfd433e34f!2sBOOST%20PERU!5e0!3m2!1ses!2spe!4v1724283038116!5m2!1ses!2spe"
-          width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-
 
     </section>
-    <form class="font-Inter_Regular mb-40" id="formContactos">
-      <div class=" grid grid-cols-1 w-11/12 m-auto px-16 pt-11">
-        <h2 class="font-Inter_Medium text-[30px] text-center">Pregúntanos cualquier cosa aquí </h2>
-        <div class="grid grid-cols-2 gap-4 mt-12 w-full">
-          <div class="col-span-2 sm:col-span-1 w-full">
-            <input type="text" placeholder="Nombre Completo " name="name"
-              class="w-full h-14 bg-[#F8F8F8] rounded-xl border-none">
-          </div>
-          <div class="col-span-2 sm:col-span-1 w-full">
-            <input type="text" placeholder="Correo Electronico" name="email" id="email"
-              class="w-full h-14 bg-[#F8F8F8] rounded-xl border-none">
-          </div>
-          <div class="col-span-3 md:col-span-2 w-full mt-8">
-            <input type="text" placeholder="Asunto " name="asunto"
-              class="w-full h-14 bg-[#F8F8F8] rounded-xl border-none">
-          </div>
-          <div class="col-span-2 w-full mt-8">
-            <textarea type="text" placeholder="Mensaje " name="message" class="w-full h-14 bg-[#F8F8F8] rounded-xl border-none"></textarea>
+
+    @if ($faqs->isEmpty())
+      {{-- <div class="w-full flex flex-row justify-center items-center">
+                <div class="p-5 text-xl font-mulish_Bold">No tienes faqs visibles</div>
+            </div> --}}
+    @else
+      <section class="my-12 mx-[5%]">
+        <div class=" font-mulish_Regular">
+          <div class="relative  pt-10 pb-8 mt-8 ring-gray-900/5 sm:mx-auto sm:rounded-lg ">
+            <div class="mx-auto px-5">
+              <div class="flex flex-col items-center">
+                <h2 class="font-mulish_Bold  text-[40px] text-[#151515] text-center leading-none md:leading-tight">
+                  Preguntas Frecuentes
+                </h2>
+              </div>
+              <div class=" mt-8 grid w-full ">
+
+                @foreach ($faqs as $faq)
+                  <div class="p-6 bg-[#F7F7F7] rounded-2xl mb-4">
+                    <details class="group">
+                      <summary class="flex cursor-pointer list-none items-center justify-between font-mulish_Medium">
+                        <span class="font-mulish_Bold text-[20px] text-[#151515]">
+                          {!! $faq->pregunta !!}</span>
+                        <span class="transition group-open:rotate-180">
+                          <svg width="18" height="20" viewBox="0 0 18 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M16.2923 11.3882L9.00065 18.3327M9.00065 18.3327L1.70898 11.3882M9.00065 18.3327L9.00065 1.66602"
+                              stroke="#EB5D2C" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        </span>
+                      </summary>
+                      <p class="group-open:animate-fadeIn mt-3 text-neutral-600">
+                        {!! $faq->respuesta !!}
+                      </p>
+                    </details>
+                  </div>
+                @endforeach
+
+
+              </div>
+            </div>
           </div>
         </div>
+        </div>
+      </section>
+    @endif
 
 
-      </div>
-      <div class="flex justify-start mt-7 w-11/12 m-auto px-16 pt-16">
-        <button class="bg-[#006BF6] text-white font-Inter_Medium text-[20px] px-10 py-3 rounded-full w-[280px]"
-          id="btnEnviar">Enviar
-          Mensaje</button>
-      </div>
-
-    </form>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-11/12 m-auto px-8 sm:px-16  gap-8">
-      @if (!Auth::check())
-        <p>Deseas ser Revendedor de nuestros productos ? <a href="{{ route('Register.jsx') }}"
-            class="text-[#006BF6]">Sigue
-            el
-            siguiente
-            enlace </a></p>
-      @endif
-
-
-    </div>
 
   </main>
 
@@ -356,7 +402,7 @@
   //             <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
   //           </div>
   //           <div class="flex flex-col gap-3 py-2">
-  //             <h3 class="font-semibold text-[14px] text-[#151515]">
+  //             <h3 class="font-mulish_SemiBold text-[14px] text-[#151515]">
   //               ${element.producto}
   //             </h3>
   //             <p class="font-normal text-[12px] text-[#6C7275]">
@@ -367,7 +413,7 @@
   //                 <span  class="text-[20px]">-</span>
   //               </button>
   //               <div class="w-8 h-8 flex justify-center items-center">
-  //                 <span  class="font-semibold text-[12px]">${element.cantidad }</span>
+  //                 <span  class="font-mulish_SemiBold text-[12px]">${element.cantidad }</span>
   //               </div>
   //               <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
   //                 <span class="text-[20px]">+</span>
@@ -376,7 +422,7 @@
   //           </div>
   //         </div>
   //         <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
-  //           <p class="font-semibold text-[14px] text-[#151515]">
+  //           <p class="font-mulish_SemiBold text-[14px] text-[#151515]">
   //             S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
   //           </p>
   //           <div class="flex items-center">

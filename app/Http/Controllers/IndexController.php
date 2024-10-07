@@ -229,10 +229,12 @@ class IndexController extends Controller
     $general = General::first();
     $categorias = Category::all();
     $url_env = env('APP_URL');
+
+    $faqs = Faqs::where('status', '=', 1)->where('visible', '=', 1)->get();
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
-    return view('public.contact', compact('general', 'url_env', 'categorias', 'destacados'));
+    return view('public.contact', compact('general', 'url_env', 'categorias', 'destacados','faqs'));
   }
 
   public function carrito()
@@ -626,9 +628,10 @@ class IndexController extends Controller
     return view('public.404');
   }
 
-  public function producto(string $id)
+  public function producto(string $id = null , Request $request)
   {
 
+    $queryProducto = $request->input('producto');
     
     $is_reseller = false; 
     if(Auth::check()){
@@ -709,7 +712,7 @@ class IndexController extends Controller
 
     if (!$combo) $combo = new Offer();
 
-    return view('public.product', compact('is_reseller', 'atributos', 'isWhishList', 'testimonios', 'general', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product', 'capitalizeFirstLetter', 'categorias', 'destacados', 'otherProducts', 'galery', 'combo'));
+    return view('public.product', compact('is_reseller','queryProducto', 'atributos', 'isWhishList', 'testimonios', 'general', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product', 'capitalizeFirstLetter', 'categorias', 'destacados', 'otherProducts', 'galery', 'combo'));
   }
 
   public function wishListAdd(Request $request)
