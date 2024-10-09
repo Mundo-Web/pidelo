@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import CreateReactScript from './Utils/CreateReactScript'
 import FilterContainer from './components/Filter/FilterContainer'
 import ProductContainer from './components/Product/ProductContainer'
-import { Fetch } from 'sode-extend-react'
+import { Fetch, GET } from 'sode-extend-react'
 import FilterPagination from './components/Filter/FilterPagination'
 import arrayJoin from './Utils/ArrayJoin'
 import ProductCard from './components/Product/ProductCard'
@@ -83,10 +83,8 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
   }
   const itemsamazon = async (word) => {
 
-    console.log(word)
-
     if (cancelTokenSource.current) {
-      cancelTokenSource.current.cancel('Operation canceled due to new request.');
+      // cancelTokenSource.current.cancel('Operation canceled due to new request.');
     }
 
     // Crear un nuevo token de cancelación
@@ -96,19 +94,20 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
       cancelToken: cancelTokenSource.current.token,
       method: 'GET',
       url: 'http://127.0.0.1:8080/api/amazon/search',
+      credentials: 'include',
       params: {
         query: word,
         page: '1',
-        country: 'US',
-        sort_by: 'RELEVANCE',
-        product_condition: 'ALL',
-        is_prime: 'false',
-        deals_and_discounts: 'NONE'
+        // country: 'US',
+        // sort_by: 'RELEVANCE',
+        // product_condition: 'ALL',
+        // is_prime: 'false',
+        // deals_and_discounts: 'NONE'
       },
-      headers: {
-        'x-rapidapi-key': 'fe172f3a7emshd5f1ac69eea5682p1d9dc7jsn5bce9792d4cc',
-        'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
-      }
+      // headers: {
+      //   'x-rapidapi-key': 'fe172f3a7emshd5f1ac69eea5682p1d9dc7jsn5bce9792d4cc',
+      //   'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
+      // }
     };
 
     try {
@@ -124,24 +123,44 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
         }
       })
       is_proveedor.current = true;
+
+      console.log(datos)
+
       setItems(datos)
     } catch (error) {
-      console.error(error);
+      console.error('error 127', error);
+    }
+  }
+
+  const searchItems = (provider, query) => {
+    switch (provider) {
+      case 'amazon':
+        itemsamazon(query)
+        break;
+      default:
+        console.log('seleccione un proveedor valido')
+        break;
     }
   }
 
   useEffect(() => {
     // Leer el parámetro 'tag' de la URL
-    const params = new URLSearchParams(window.location.search);
-    const tag = params.get('tag');
-    const amz = params.get('amzs');
+    // const params = new URLSearchParams(window.location.search);
+    // const tag = params.get('tag');
+    // const amz = params.get('amzs');
+
+    const tag = GET.tag
+    const provider = GET.proveedor;
+    const query = GET.query
+
+    searchItems(provider, query)
 
     // Actualizar el filtro con el 'tag_id' si existe
-    if (amz) {
-      // realizarBusqueda(amz)
-      itemsamazon(amz)
-      return
-    }
+    // if (amz) {
+    //   // realizarBusqueda(amz)
+    //   itemsamazon(amz)
+    //   return
+    // }
     if (tag) {
       setFilter(prevFilter => ({
         ...prevFilter,
@@ -162,32 +181,44 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
 
   useEffect(() => {
 
-    const params = new URLSearchParams(window.location.search);
-    const tag = params.get('tag');
-    const amz = params.get('amzs');
+    // const params = new URLSearchParams(window.location.search);
+    // const tag = params.get('tag');
+    // const amz = params.get('amzs');
+    const provider = GET.proveedor;
+    const query = GET.query
+
+
+    searchItems(provider, query)
 
     // Actualizar el filtro con el 'tag_id' si existe
-    if (amz) {
-      // realizarBusqueda(amz)
-      itemsamazon(amz)
-      return
-    }
+    // if (amz) {
+    //   // realizarBusqueda(amz)
+    //   itemsamazon(amz)
+    //   return
+    // }
 
     setCurrentPage(1);
     getItems();
   }, [filter]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tag = params.get('tag');
-    const amz = params.get('amzs');
+    // const params = new URLSearchParams(window.location.search);
+    // const tag = params.get('tag');
+    // const amz = params.get('amzs');
 
     // Actualizar el filtro con el 'tag_id' si existe
-    if (amz) {
-      // realizarBusqueda(amz)
-      itemsamazon(amz)
-      return
-    }
+    // if (amz) {
+    //   // realizarBusqueda(amz)
+    //   itemsamazon(amz)
+    //   return
+    // }
+
+    // const tag = GET.tag
+    const provider = GET.proveedor;
+    const query = GET.query
+
+    searchItems(provider, query)
+
     getItems();
   }, [currentPage]);
 
@@ -525,7 +556,7 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
               >
                 <img
                   loading="lazy"
-                  srcset="https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
+                  srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/f8cc9693b55a6b6c65b84b13ba7d77b14d28c02c6289d1b619fb8f3e5fd3f855?placeholderIfAbsent=true&apiKey=b6f214df1e0f4f5eae4157d4f12e0ba3"
                   className="object-contain z-10 mt-0 max-w-full aspect-[1.16] w-[406px]"
                 />
               </div>

@@ -185,7 +185,7 @@ class AuthController extends Controller
             $name = '';
             $mensaje = "";
             $mailer = EmailConfig::config($name, $mensaje);
-            $mailer->Subject = 'Confirmacion - Boost Peru';
+            $mailer->Subject = 'Confirmacion - ' . env('APP_NAME');
             $mailer->Body = $content;
             $mailer->addAddress($preUserJpa->email);
             $mailer->isHTML(true);

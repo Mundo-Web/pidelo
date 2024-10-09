@@ -19,7 +19,7 @@ const ConfirmEmail = ({ email }) => {
                 <Link href="/">
                   <img src="/images/svg/LOGO2.png" alt="" height="40px" className="mx-auto" />
                 </Link>
-                <p className="text-muted mt-2 mb-4">BOOST PERU by Mundo Web</p>
+                <p className="text-muted mt-2 mb-4">PideloPe by Mundo Web</p>
               </div>
               <div className="card text-center">
                 <div className="card-body p-4">

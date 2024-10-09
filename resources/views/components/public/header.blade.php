@@ -169,26 +169,24 @@
 
       <div class="hidden lg:flex items-center justify-center ">
         <div class="flex items-center justify-center">
-          <div class="flex max-w-2xl w-full h-12">
+          <form id="search-form" class="flex max-w-2xl w-full p-2 border rounded-3xl items-center gap-2">
             <div class="relative h-full">
-              <select
-                class="appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-l-2xl leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-full">
-                <option>Amazon</option>
+              <select id="cbo-proveedor"
+                class="appearance-none border-none bg-white text-gray-700 py-2 px-4 rounded-l-2xl leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-full">
+                <option value="amazon">Amazon</option>
               </select>
 
             </div>
-            <input type="text" placeholder="Buscar productos" id="BuscadorProductos"
-              class="flex-grow border-t border-b  border-gray-300 px-4 py-2 focus:outline-none h-full">
+            <input type="search" placeholder="Buscar productos" id="txt-buscar-productos"
+              class="flex-grow border-none px-4 py-2 outline-none h-full" required>
             <div
-              class="flex-grow border-t border-b  border-r  border-gray-300  focus:outline-none h-full text-green-500 font-bold py-2 px-4 rounded-r-2xl   flex justify-center items-center ">
-              <button class="bg-[#0A090B] rounded-xl  text-[#9AFA26] text-[14px] mulish_Light px-2 py-2 " type="button"
-                onclick="buscarProductos()">
-                <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                Buscar
+              class="flex-grow  border-gray-300  focus:outline-none h-full text-green-500 font-bold rounded-r-2xl flex justify-center items-center ">
+              <button class="bg-[#0A090B] rounded-xl  text-[#9AFA26] text-[14px] mulish_Light px-4 py-2" type="submit">
+                🔍 Buscar
               </button>
             </div>
 
-          </div>
+          </form>
         </div>
       </div>
 
@@ -756,7 +754,15 @@
 <script>
   function buscarProductos() {
     value = $('#BuscadorProductos').val()
-    console.log()
     window.location.href = `/catalogo?amzs=${encodeURI(value) }`
   }
+
+  $(document).on('submit', '#search-form', (e) => {
+    e.preventDefault()
+
+    const query = $('#txt-buscar-productos').val()
+    const provider = $('#cbo-proveedor').val()
+
+    location.href  = `/catalogo?proveedor=${provider}&query=${encodeURIComponent(query)}`
+  })
 </script>
