@@ -50,7 +50,7 @@ const Catalogo = ({ minPrice, maxPrice, categories, tags, attribute_values, id_c
     const query = $('#txt-buscar-productos').val()
     const urlParams = new URLSearchParams();
     urlParams.append('query', query)
-    const { status, result } = await Fetch(`http://localhost:8080/api/${provider}/search?${urlParams.toString()}`)
+    const { status, result } = await Fetch(`https://scraping.pidelope.com.pe/api/${provider}/search?${urlParams.toString()}`)
     
 
     setItems(result?.data?.items ?? [])
