@@ -173,12 +173,12 @@
             <div class="relative h-full">
               <select id="cbo-proveedor"
                 class="appearance-none border-none bg-white text-gray-700 py-2 px-4 rounded-l-2xl leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-full">
-                <option value="amazon">Amazon</option>
+                <option value="aliexpress">Aliexpress</option>
               </select>
 
             </div>
             <input type="search" placeholder="Buscar productos" id="txt-buscar-productos"
-              class="flex-grow border-none px-4 py-2 outline-none h-full" required>
+              class="flex-grow border-none px-4 py-2 outline-none h-full" value="{{$_GET['query'] ?? ''}}" required>
             <div
               class="flex-grow  border-gray-300  focus:outline-none h-full text-green-500 font-bold rounded-r-2xl flex justify-center items-center ">
               <button class="bg-[#0A090B] rounded-xl  text-[#9AFA26] text-[14px] mulish_Light px-4 py-2" type="submit">
